@@ -1,0 +1,9 @@
+KPI,Value,Target,Status
+Data Status,ILLUSTRATIVE SAMPLE - VERIFY,Verified source,REVIEW
+Generated UTC,2026-09-27T20:02:31+00:00,Current,INFO
+Opening Bankroll NGN,5000000.00,Configured,INFO
+Current Settled Bankroll NGN,5488750.00,>=5000000.00,CALCULATED
+Settled Net P&L NGN,488750.00,Informational,CALCULATED
+ROI on Settled Stakes,21.25%,Informational,CALCULATED
+Wins / Losses,4 / 2,Informational,CALCULATED
+Loss Limit Check,0.00 / 250000.00,<=250000.00,PASS

@@ -1,0 +1,12 @@
+{
+  "generated_utc": "2026-09-27T20:02:31+00:00",
+  "data_status": "illustrative_sample",
+  "opening_bankroll_ngn": 5000000,
+  "settled_bankroll_ngn": 5488750,
+  "settled_stakes_ngn": 2300000,
+  "net_pnl_ngn": 488750,
+  "roi_on_settled_stakes": 0.21250000000000001,
+  "wins": 4,
+  "losses": 2,
+  "drawdown_ngn": 0
+}
