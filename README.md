@@ -1,113 +1,38 @@
 # Trillionbg SportyBet Reporting Package
 
-**Status:** Public reporting workspace  
-**Data:** Illustrative sample for review structure  
-**Version:** 1.0.0  
-**Last Updated:** 2026-09-27
+This repository exists for reporting, validation, and stakeholder distribution only.
+It does not connect to a live betting account, execute wagers, or transfer funds.
 
----
+## Current status
 
-## Executive Summary
-
-This repository contains a professional reporting framework for disciplined, data-driven betting operations review. The package demonstrates a complete operational audit trail including:
-
-- **Settlement Ledger** – Bet-by-bet tracking with NGN currency precision
-- **Operational Dashboard** – Real-time KPI monitoring and risk metrics
-- **Risk Compliance** – Automated control verification and loss-limit checks
-- **Report Generator** – Reproducible, auditable CSV export pipeline
-
----
-
-## Key Features
-
-✅ **Transparent Risk Model**  
-Fractional Kelly at 20% with hard stop-loss limits  
-
-✅ **Compliance-Ready**  
-All risk controls automated and logged  
-
-✅ **Reproducible**  
-Sample data clearly labeled; replace with verified exports for operational use  
-
-✅ **Professional Grade**  
-Investor-ready formatting and documentation  
-
----
+- Public mirror repository: ready for external sharing
+- Reports: generated from clearly labeled illustrative sample data
+- Security model: read-only, no live credentials, no external betting account access
+- Compliance posture: human approval required for any real-world operational data source
 
 ## Files
 
-| File | Purpose |
-|------|----------|
-| `scripts/alert_action_csv_generation.py` | Core report generator |
-| `exports/Settlement_Ledger.csv` | Transaction-level audit trail |
-| `exports/Operational_Dashboard.csv` | KPI summary and health checks |
-| `exports/Risk_Compliance.csv` | Risk control verification |
-| `INVESTOR_BRIEF.md` | Professional summary for stakeholders |
-| `ZIP_EXPORT.py` | Package generator for distribution |
+- `scripts/alert_action_csv_generation.py` — reporting generator
+- `exports/Settlement_Ledger.csv` — sample ledger
+- `exports/Operational_Dashboard.csv` — KPI dashboard
+- `exports/Risk_Compliance.csv` — risk checks
+- `INVESTOR_BRIEF.md` — stakeholder summary
+- `ZIP_EXPORT.py` — package zipper for distribution
+- `.github/workflows/secure-reporting.yml` — safe reporting workflow
 
----
-
-## Getting Started
-
-### Generate Reports
+## How to generate reports
 
 ```bash
 python scripts/alert_action_csv_generation.py
 ```
 
-Outputs to `exports/` directory.
+## Workflow security notes
 
-### Create Distribution Package
+- No account credentials are stored here
+- No live betting or payment execution is included
+- Secrets are avoided by default
+- A real-world operational workflow would require a regulated, audited environment and explicit authorization
 
-```bash
-python ZIP_EXPORT.py
-```
+## Important disclaimer
 
-Creates `trillionbg-sportybet-reporting-[DATE].zip`
-
----
-
-## Important Disclaimers
-
-⚠️ **Sample Data Only**  
-This repository uses illustrative sample data. Replace values with verified account exports before operational use.
-
-⚠️ **No Live Betting**  
-This package does not connect to SportyBet, execute bets, or settle live transactions.
-
-⚠️ **Not Financial Advice**  
-Betting and sports wagering involve real risk of financial loss. Consult regulatory guidance.
-
----
-
-## Client Profile
-
-| Field | Value |
-|-------|-------|
-| Client | Trillionbg |
-| Market | SportyBet |
-| Currency | NGN (Nigerian Naira) |
-| Risk Model | Fractional Kelly @ 20% |
-| Opening Bankroll | ₦5,000,000 |
-| Max Daily Loss | ₦250,000 |
-| Confidence Floor | 75+ |
-| Min Edge Required | 5%+ |
-
----
-
-## Support & Documentation
-
-- **Report Specs:** See `INVESTOR_BRIEF.md`
-- **Data Import:** Provide verified account CSV exports
-- **Customization:** Modify `scripts/alert_action_csv_generation.py`
-- **Issues:** Use GitHub Issues
-
----
-
-## License
-
-MIT License – See LICENSE file
-
----
-
-**Repository:** https://github.com/cashpilotthrive-hue/sportybet-reporting-public
+This package is not a live betting executor, not a financial advisor, and not a mechanism for account login or game settlement. Any real-world operational use must be reviewed by legal and compliance functions and must use approved data sources and authorized credentials.

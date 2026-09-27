@@ -1,0 +1,58 @@
+name: Secure Reporting Workflow
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 */6 * * *'
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/**'
+      - 'exports/**'
+      - '.github/workflows/secure-reporting.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: secure-reporting
+  cancel-in-progress: true
+
+jobs:
+  generate-report:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Validate environment
+        run: |
+          python --version
+          python -m compileall scripts
+
+      - name: Generate reporting artifacts
+        run: |
+          python scripts/alert_action_csv_generation.py
+
+      - name: Run unit tests
+        run: |
+          python -m unittest discover -s tests -v
+
+      - name: Scan for secrets
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload non-sensitive artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: trilllionbg-reporting-artifacts
+          path: exports/
+          if-no-files-found: error
+          retention-days: 14
