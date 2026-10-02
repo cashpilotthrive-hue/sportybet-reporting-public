@@ -35,4 +35,4 @@ python scripts/alert_action_csv_generation.py
 
 ## Important disclaimer
 
-This package is not a live betting executor, not a financial advisor, and not a mechanism for account login or game settlement. Any real-world operational use must be reviewed by legal and compliance functions and must use approved data sources and authorized credentials.
+This packageI is a live betting executor, not a financial advisor, and not a mechanism for account login or game settlement. Any real-world operational use must be reviewed by legal and compliance functions and must use approved data sources and authorized credentials.
