@@ -1,0 +1,175 @@
+Comprehensive Enterprise Dependabot Configuration (.github/dependabot.yml)
+Documentation: https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+version: 2
+updates:
+=========================================================================
+1. NPM / Node.js Dependencies
+=========================================================================
+￼ package-ecosystem: "npm"
+directory: "/"
+schedule:
+interval: "weekly"
+day: "monday"
+time: "04:00"
+timezone: "America/New_York"
+open-pull-requests-limit: 10
+target-branch: "main"
+Assignees and reviewers
+assignees:
+￼ "dev-lead"
+reviewers:
+￼ "frontend-team"
+￼ "security-team"
+labels:
+￼ "dependencies"
+￼ "javascript"
+￼ "automerge-candidate"
+Automatic semantic versioning PR commit/title formatting
+commit-message:
+prefix: "chore(deps)"
+prefix-development: "chore(deps-dev)"
+include: "scope"
+Ignore major breaking changes for specific core frameworks if needed
+ignore:
+￼ dependency-name: "react"
+update-types: ["version-update:semver-major"]
+￼ dependency-name: "react-dom"
+update-types: ["version-update:semver-major"]
+Group updates to reduce PR noise (e.g., bundle non-breaking patch/minor updates)
+groups:
+minor-and-patch:
+patterns:
+- "*"
+update-types:
+- "minor"
+- "patch"
+=========================================================================
+2. Python (Pip / Pipenv / Poetry / Requirements)
+=========================================================================
+￼ package-ecosystem: "pip"
+directory: "/"
+schedule:
+interval: "weekly"
+day: "tuesday"
+time: "05:00"
+timezone: "America/New_York"
+open-pull-requests-limit: 5
+target-branch: "main"
+labels:
+￼ "dependencies"
+￼ "python"
+commit-message:
+prefix: "chore(deps-python)"
+groups:
+python-linters-and-tests:
+patterns:
+￼ "pytest*"
+￼ "flake8*"
+￼ "black"
+￼ "mypy"
+￼ "ruff"
+=========================================================================
+3. Docker Containers / Dockerfiles
+=========================================================================
+￼ package-ecosystem: "docker"
+directory: "/"
+schedule:
+interval: "weekly"
+day: "wednesday"
+time: "03:00"
+timezone: "America/New_York"
+open-pull-requests-limit: 5
+labels:
+￼ "dependencies"
+￼ "docker"
+￼ "devops"
+commit-message:
+prefix: "ci(docker)"
+=========================================================================
+4. GitHub Actions Workflows
+=========================================================================
+￼ package-ecosystem: "github-actions"
+directory: "/"
+schedule:
+interval: "weekly"
+day: "thursday"
+time: "02:00"
+timezone: "America/New_York"
+open-pull-requests-limit: 10
+labels:
+￼ "dependencies"
+￼ "github-actions"
+￼ "ci/cd"
+commit-message:
+prefix: "ci(actions)"
+Combine all GitHub Actions updates into a single PR
+groups:
+actions-all:
+patterns:
+- "*"
+=========================================================================
+5. Go Modules (If applicable)
+=========================================================================
+￼ package-ecosystem: "gofmt"
+directory: "/"
+schedule:
+interval: "monthly"
+open-pull-requests-limit: 3
+labels:
+￼ "dependencies"
+￼ "golang"
+commit-message:
+prefix: "chore(deps-go)"
+=========================================================================
+6. Infrastructure as Code (Terraform)
+=========================================================================
+￼ package-ecosystem: "terraform"
+directory: "/terraform"
+schedule:
+interval: "monthly"
+open-pull-requests-limit: 3
+labels:
+￼ "dependencies"
+￼ "terraform"
+￼ "infrastructure"
+commit-message:
+prefix: "infra(deps)"
+Dependabot Errors, Diagnosis & Enterprise Solutions
+This guide addresses configuration syntax errors found in basic Dependabot setups as well as common execution failures encountered in production environments.
+1. Syntax & Configuration Errors (Immediate Failures)
+Error 1: Invalid ⁠package-ecosystem: "gofmt"⁠
+￼ Symptom: Dependabot fails to parse ⁠.github/dependabot.yml⁠ and raises an ⁠invalid configuration file⁠ error.
+￼ Root Cause: ⁠gofmt⁠ is a code formatting tool, not a valid package ecosystem for Dependabot.
+￼ Solution: Replace ⁠gofmt⁠ with ⁠gomod⁠.
+Error 2: Blank or Invalid ⁠package-ecosystem: ""⁠
+￼ Symptom: Dependabot logs show: ⁠The property '#/updates/0/package-ecosystem' was not one of the allowed values⁠.
+￼ Root Cause: Placeholder values (⁠""⁠ or ⁠"*"⁠) left in the configuration file.
+￼ Solution: Explicitly define supported ecosystems (e.g., ⁠npm⁠, ⁠pip⁠, ⁠docker⁠, ⁠github-actions⁠, ⁠gomod⁠, ⁠terraform⁠).
+Error 3: Directory Path Not Found
+￼ Symptom: ⁠Dependabot::PathNotFound: The path /terraform could not be found⁠.
+￼ Root Cause: The ⁠directory⁠ specified in ⁠dependabot.yml⁠ does not exist in the root of the repository target branch.
+￼ Solution: Ensure target directory exists, or adjust path to ⁠"/"⁠:
+2. CI/CD & Permission Errors (Runtime Failures)
+Error 4: Workflow Runs Fail on Dependabot PRs (Secret Access Denied)
+￼ Symptom: GitHub Actions workflows triggered by Dependabot PRs fail with missing environment variables or secret authorization errors.
+￼ Root Cause: By default, workflows triggered by Dependabot pull requests run with a read-only token and do not have access to repository secrets (⁠secrets.GITHUB_TOKEN⁠ or custom secrets).
+￼ Solution: Use the ⁠dependabot/fetch-metadata⁠ action or set up specific ⁠secrets⁠ triggers in your workflow.
+Error 5: Private Registry Authentication Failures
+￼ Symptom: Dependabot logs show ⁠Dependabot::PrivateSourceAuthenticationFailure⁠.
+￼ Root Cause: Dependabot cannot download private dependencies (e.g., private npm packages, private GitHub releases, AWS CodeArtifact).
+￼ Solution: Declare top-level ⁠registries⁠ in ⁠dependabot.yml⁠ using encrypted repository secrets.
+3. Operational & Noise Management Issues
+Issue 6: PR Flood / Rate Limiting Exhaustion
+￼ Symptom: Dozens of PRs created at once, clogging CI runners and developer notifications.
+￼ Solutions:
+1. Enforce Open PR Limits: Set lower bounds per ecosystem (⁠open-pull-requests-limit: 3-5⁠).
+2. Group Dependencies: Combine minor and patch updates into single consolidated PRs.
+3. Stagger Schedules: Assign different days/times for different ecosystems.
+Issue 7: Incompatible Transitive Dependency Upgrades
+￼ Symptom: Dependabot creates a PR that updates a sub-dependency, causing broken builds due to peer dependency mismatches.
+￼ Solution: Restrict Dependabot to direct dependencies or ignore major updates for core libraries.
+4. Verification Checklist
+To verify your configuration in GitHub:
+1. Navigate to Insights > Dependency graph > Dependabot.
+2. Check the Last checked status and review job logs for syntax or fetch warnings.
+3. Use the [GitHub Dependabot Validator](https://github.com hover over ⁠.github/dependabot.yml⁠ in GitHub Web UI to check schema syntax) prior to merging.
